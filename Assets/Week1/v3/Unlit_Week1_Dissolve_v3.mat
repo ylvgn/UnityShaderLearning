@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Mask:
-        m_Texture: {fileID: 2800000, guid: 4b5ca4ded9c631c4d95aad86fce2054e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4a36a1e8109a4c04abc619d82367b6d7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture1:
@@ -32,9 +32,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Dissolve: 0.46
+    - _Dissolve: 0
     - _EdgeSoftness: 0
-    - _EdgeWidth: 0.2
+    - _EdgeWidth: 0.09
     m_Colors:
     - _EdgeColor: {r: 1, g: 0.9648032, b: 0, a: 1}
   m_BuildTextureStacks: []

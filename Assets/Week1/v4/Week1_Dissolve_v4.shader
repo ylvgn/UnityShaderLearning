@@ -1,18 +1,15 @@
-Shader "Unlit/Week1_Dissolve_v1"
+Shader "Unlit/Week1_Dissolve_v4"
 {
     Properties
     {
-        _Texture1 ("Texture1", 2D) = "white" {}
-        _Texture2("Texture2", 2D) = "white" {}
+        _Texture1("Texture1", 2D) = "white" {}
         _Mask("Mask", 2D) = "white" {}
         _Dissolve("Dissolve", range(0, 1)) = 0
+        _EdgeWidth("EdgeWidth", range(0, 1)) = 0
+        _EdgeColor("EdgeColor", Color) = (1, 0, 0, 1)
     }
-
     SubShader
     {
-        Cull Off
-        ZTest Always
-
         Tags { "RenderType"="Opaque" }
         LOD 100
 
@@ -36,9 +33,10 @@ Shader "Unlit/Week1_Dissolve_v1"
             };
 
             sampler2D _Texture1;
-            sampler2D _Texture2;
             sampler2D _Mask;
             float _Dissolve;
+            float4 _EdgeColor;
+            float _EdgeWidth;
 
             v2f vert (appdata v)
             {
@@ -52,12 +50,28 @@ Shader "Unlit/Week1_Dissolve_v1"
             {
                 float2 uv = i.uv;
                 float4 c1 = tex2D(_Texture1, uv);
-                float4 c2 = tex2D(_Texture2, uv);
                 float w = tex2D(_Mask, uv);
+                
+                //flow dir : discard -> edgeColor -> c1------->
 
-                // step(a, b) -> a <= b ? 1 : 0 : https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-step
-                float t = step(w, _Dissolve);
-                return lerp(c1, c2, t);
+                float len = 1 + _EdgeWidth;
+                float dissolve = _Dissolve * len;
+
+                float t1 = step(w, dissolve);              // w <= D? _EdgeColor : c1
+                float4 o = lerp(c1, _EdgeColor, t1);
+
+                float t2 = step(w, dissolve - _EdgeWidth); // w <= D - W? discard : o(c1 or _EdgeColor)
+
+                // clip: https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-clip
+                clip(t2? -1 : 1);
+                
+                /*
+                    Equivalent to
+                    if (t2 == 1) {
+                        discard;
+                    }
+                */
+                return o;
             }
             ENDCG
         }
