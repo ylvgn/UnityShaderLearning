@@ -52,54 +52,37 @@ Shader "Unlit/Week001_Dissolve_v5"
             }
 
             /*
-            
                     > dissolve      <=> D
                     > EdgeWidth     <=> W
                     > EdgeSoftness  <=> S
                     > center        <=> C
                     > c1            <=> Texture1(Color)
                     > c2            <=> Texture2(Color)
+                    > edge          <=> _EdgeColor
 
                     flow dir : c2 -> softLeft -> edgeColor -> softRight -> c1
-                    ==============================================================================================================
-                    Ô­Àí:
-
-                            [     W + S     ]               [     W + S     ]
-                            |               |               |               |
-                            |               |               |               |
-                            |               |_______________|               |
-                            ¡ü   ¡ü   ¡ü   ¡ü   0               1   ¡ü   ¡ü   ¡ü   ¡ü
-                            ¡ü   ¡ü   ¡ü   ¡ü   ¡ü               ¡ü   ¡ü   ¡ü   ¡ü   ¡ü
-                           D-W  ¡ü   C   ¡ü   D             D'-W  ¡ü   C'  ¡ü   D'
-                                ¡ü       ¡ü                       ¡ü       ¡ü
-                              C-W/2   C+W/2                   C'-W/2  C'+W/2
-                            [   ][     ][   ]
-                              ¡ü           ¡ü
-                          softLeft    softRight
 
                     ==============================================================================================================
-                    ³õÊ¼:
 
-                            [    W + S     ]               [     W + S     ]
-                            |   |      |   |               |               |
-                     c2     |   | edge |   |      c1       |               |
-                            |   |      |   |_______________|               |
-                            |   |      |   |
-                   mix(c2, edge)|      |mix(edge, c1)
-                            | ¡ý |      | ¡ý |
-                            [   ]      [   ]
-                              ¡ü          ¡ü
-                           softLeft   softRight
+                           [ <--------- W + S -----------> ]               [     W + S     ]
+                           |          |        |           |               |               |
+                     c2    |          |  edge  |           |      c1       |               |
+                           |          |        |           |_______________|               |
+                           |          |        |           0               1
+                         mix(c2, edge)|        |mix(edge, c1)
+                           |          |        |           |
+                           [ softLeft ]    C   [ softRight ]
+                         D-W        C-W/2     C+W/2        D
 
-                ÆäÖÐ, mix·½Ê½Ê¹ÓÃ'smoothstep'
-                    ×ó±ß: float tLeft = smoothstep(D-W, C-W/2, from the color of noise texture 'r'):
-                    ÓÒ±ß: float tRight = smoothstep(C+W/2, max, from the color of noise texture 'r'):
-                
-                ×ó±ßmixµÄÐ§¹ûÊÇ¿¿½üc2µÄÇ³É«edge, ¿¿½üedgeµÄÉîÉ«edge£¬ÓÒ±ßÍ¬Àí¿¿½üedgeÉîÉ«edge£¬¿¿½üc1Ç³É«edge¡£
-                È»ºó£¬×¢ÒâmixµÄ·½Ïò
-                    1. softLeft:  c2ÔÚedge×ó±ß£¬¼´c2Òª¿¿½ü0, ËùÒÔlerp(c2, edge, tLeft)
-                    2. softRight: c1ÔÚedgeÓÒ±ß, ¼´c1Òª¿¿½ü1£¬ËùÒÔlerp(edge, c1, tRight)
+                    ==============================================================================================================
 
+                use 'smoothstep' to mix 2 color
+                    1. softLeft : float tLeft  = smoothstep(D - (W + S), C-W/2, noiseColor.r);
+                    2. softRight: float tRight = smoothstep(C + W/2,     D,     noiseColor.r);
+
+                how to mix:
+                    1. softLeft:  c2 is to the left of edgeï¼Œ so c2 should be close to 0, then lerp(c2, edge, tLeft);
+                    2. softRight: c1 is to the right of edge, so c1 should be close to 1ï¼Œthen lerp(edge, c1, tRight);
             */
             float4 frag(v2f i) : SV_Target
             {
@@ -116,9 +99,9 @@ Shader "Unlit/Week001_Dissolve_v5"
                 float dissolve = _Dissolve * len;
                 float center = dissolve - widthOver2;
                 float minWidth = center - widthOver2;
-                float maxWidth = dissolve;  // Equivalent to: center + widthOver2
-                
-                // ÎÞsoftÊ±ºò Ö±½ÓÓÃ Week_Dissolve_v3.shader
+                float maxWidth = dissolve;  // Equivalent to center + widthOver2
+
+                // no _EdgeSoftness, just use 'Week_Dissolve_v3.shader'
                 if (_EdgeSoftness == 0) {
                     float t1 = step(w, dissolve);
                     float4 o1 = lerp(c1, _EdgeColor, t1);
@@ -127,12 +110,12 @@ Shader "Unlit/Week001_Dissolve_v5"
                     return o2;
                 }
 
-                // ¶Ô Week_Dissolve_v2.shader µÄ½øÒ»²½¸ÄÉÆ
+                // å¯¹ Week_Dissolve_v2.shader å˜…è¿›ä¸€æ­¥æ”¹å–„
                 float t3 = smoothstep(minWidth, center - edgeWidthOver2, w); // softLeft
                 float t4 = smoothstep(center + edgeWidthOver2, maxWidth, w); // softRight
                 float4 o3 = lerp(c2, _EdgeColor, t3);
-                float4 o4 = lerp(_EdgeColor, c1, t4); // Equivalent to: lerp(c1, _EdgeColor, 1 - t4);
-                return lerp(o3, o4, t3); // Equivalent to lerp(o3, o4, t4);
+                float4 o4 = lerp(_EdgeColor, c1, t4); // Equivalent to lerp(c1, _EdgeColor, 1 - t4);
+                return lerp(o3, o4, t3);              // Equivalent to lerp(o3, o4, t4);
             }
             ENDCG
         }

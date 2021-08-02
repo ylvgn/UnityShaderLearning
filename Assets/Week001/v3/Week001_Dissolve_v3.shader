@@ -62,41 +62,32 @@ Shader "Unlit/Week001_Dissolve_v3"
 
                     flow dir: c2 -> edgeColor -> c1 ------->
                     ==============================================================================================================
-                    原理：
-
-                                                 [EdgeWidth]            [EdgeWidth]
+                    Start:
+                                                 [    W    ]            [    W    ]
                                                  |         |            |         |
-                                                 |         |            |         |
+                                        c2       |edgeColor|     c1     |         |
                                                  |         |____________|         |
-                                                 ↑         0            1         ↑
-                                                 ↑         ↑            ↑         ↑
-                                                D-W        D          D'-W        D'
+                                               D-W         D            D'       D'-W
+                                                           0            1
                     ==============================================================================================================
-                    初始:
-                                                 [EdgeWidth]            [EdgeWidth]
+                    End:
+                                                 [    W    ]            [    W    ]
                                                  |         |            |         |
-                                        c2       |edgeColor|    c1      |         |
+                                                 |         |     c2     |edgeColor|       c1
                                                  |         |____________|         |
-                                                 ↑         0            1         ↑
-                                                 ↑         ↑            ↑         ↑
-                                                D-W        D          D'-W        D'
-                    ==============================================================================================================
-                    最终:
-                                                 [EdgeWidth]            [EdgeWidth]
-                                                 |         |            |         |
-                                                 |         |    c2      |edgeColor|c1
-                                                 |         |____________|         |
-                                                 ↑         0            1         ↑
-                                                 ↑         ↑            ↑         ↑
-                                                D-W        D          D'-W        D'
+                                               D-W         D            D'       D'-W
+                                                           0            1
                 */
                 float len = 1 + _EdgeWidth;
-                float dissolve = _Dissolve * len;          // [0, 1 + _EdgeWidth]
+                float dissolve = _Dissolve * len; // dissolve : [0, 1 + _EdgeWidth]
 
-                float t1 = step(w, dissolve);              // w <= D? _EdgeColor : c1 -> 当w == D的时候，意味着这里要溶解，也就需要出现edgeColor
+                // step(w, dissolve) -> w <= D? _EdgeColor : c1
+                // when w == D, it means this pixel need to dissolve, so we use _EdgeColor.
+                float t1 = step(w, dissolve);
                 float4 o = lerp(c1, _EdgeColor, t1);
 
-                float t2 = step(w, dissolve - _EdgeWidth); // w <= D - W? c2 : o(c1 or _EdgeColor), 由于w范围是[0, 1], 所以要 dissolve - _EdgeWidth
+                // cause w is [0, 1], and dissolve is [0, 1 + _EdgeWidth], so right-hand is 'dissolve - _EdgeWidth'
+                float t2 = step(w, dissolve - _EdgeWidth);
                 return lerp(o, c2, t2);
             }
             ENDCG
