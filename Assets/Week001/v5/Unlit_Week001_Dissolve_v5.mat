@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_Week1_Dissolve_v1
-  m_Shader: {fileID: 4800000, guid: b0f40ba5c12908949967f2aa18fe0a7e, type: 3}
+  m_Name: Unlit_Week001_Dissolve_v5
+  m_Shader: {fileID: 4800000, guid: f2086da8fd2f15643a85d58cf7f1f7a6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Mask:
-        m_Texture: {fileID: 2800000, guid: 4a36a1e8109a4c04abc619d82367b6d7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4b5ca4ded9c631c4d95aad86fce2054e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture1:
@@ -32,9 +32,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Dissolve: 0.31
-    - _EdgeSoftness: 0.88
-    - _EdgeWidth: 0.031
+    - _Dissolve: 0
+    - _EdgeSoftness: 0
+    - _EdgeWidth: 0
     m_Colors:
-    - _EdgeColor: {r: 1, g: 0.04705883, b: 0, a: 1}
+    - _EdgeColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

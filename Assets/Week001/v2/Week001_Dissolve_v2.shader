@@ -1,4 +1,4 @@
-Shader "Unlit/Week1_Dissolve_v2"
+Shader "Unlit/Week001_Dissolve_v2"
 {
     Properties
     {
