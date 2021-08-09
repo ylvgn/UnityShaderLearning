@@ -25,7 +25,6 @@ public class Week002_Trial_v1 : MonoBehaviour
     [Range(0f, 5f)]
     public float trialWidth = 1f;
 
-    private MeshFilter meshFilter;
     private List<Point> points;
     Vector3[] vertices;
     int[] triangles;
@@ -43,11 +42,10 @@ public class Week002_Trial_v1 : MonoBehaviour
     [Range(5, 10)]
     public int fontSize = 8;
     [Range(10f, 100f)]
-    public float debugRange = 10f;
+    public float debugRange = 100f;
 
     void Start()
     {
-        meshFilter = GetComponent<MeshFilter>();
         lastTime = Time.realtimeSinceStartup;
         points = new List<Point>(POINT_COUNT);
         for (int i = 0; i < POINT_COUNT; i ++)
@@ -78,8 +76,8 @@ public class Week002_Trial_v1 : MonoBehaviour
 
         points[index] = new Point(transform);
         index = (index + 1) % POINT_COUNT;
-        var mesh = createMesh();
-        meshFilter.mesh = mesh;
+
+        createMesh();
     }
 
     Mesh createMesh()
