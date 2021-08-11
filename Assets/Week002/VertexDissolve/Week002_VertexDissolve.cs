@@ -11,7 +11,7 @@ public class Week002_VertexDissolve : MonoBehaviour
 
     void Start()
     {
-        Mesh omesh = GetComponent<MeshFilter>().mesh;
+        Mesh omesh = GetComponent<MeshFilter>().sharedMesh;
         var vertices = omesh.vertices;
         var triangles = omesh.triangles;
         var normals = omesh.normals;
@@ -100,12 +100,19 @@ public class Week002_VertexDissolve : MonoBehaviour
         myMesh.normals = myNormals.ToArray();
         myMesh.uv = myUVs.ToArray();
         myMesh.colors = myColors;
-        GetComponent<MeshFilter>().sharedMesh = myMesh;
+        GetComponent<MeshFilter>().mesh = myMesh;
 
-        if (!mat)
+        if (mat)
         {
-            throw new System.Exception("not set Material");
+            mat.SetFloat("_DissolveSpeed", speed);
         }
-        mat.SetFloat("_DissolveSpeed", speed);
+    }
+
+    private void OnDisable()
+    {
+        if (mat)
+        {
+            mat.SetFloat("_DissolveSpeed", 0f);
+        }
     }
 }
