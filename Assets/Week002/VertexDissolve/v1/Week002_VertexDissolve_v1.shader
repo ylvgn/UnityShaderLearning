@@ -1,4 +1,4 @@
-Shader "Unlit/Week002_VertexDissolve"
+Shader "Unlit/Week002_VertexDissolve_v1"
 {
     Properties
     {

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_Week002_Trial_v3
+  m_Name: Unlit_Week002_Trail_v3
   m_Shader: {fileID: 4800000, guid: 8a79f05af7837424b9a31c35806985d1, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7b11be2e69e951846b8d95db1076a7c4, type: 3}
+        m_Texture: {fileID: 2800000, guid: b04b4dccf85150142b36d5027631fc8e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats: []

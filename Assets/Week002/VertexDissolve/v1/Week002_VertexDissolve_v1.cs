@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Week002_VertexDissolve : MonoBehaviour
+public class Week002_VertexDissolve_v1 : MonoBehaviour
 {
     public Material mat;
 
@@ -23,7 +23,6 @@ public class Week002_VertexDissolve : MonoBehaviour
         List<Vector2> myUVs = new List<Vector2>(uv);
         HashSet<int> st = new HashSet<int>();
         int id = vertices.Length;
-        var s = "";
         for (int i = 0; i < triangles.Length; i++)
         {
             var indice = triangles[i];
@@ -43,37 +42,7 @@ public class Week002_VertexDissolve : MonoBehaviour
                 st.Add(indice);
                 myTriangles.Add(indice);
             }
-
-            // debug
-            /*
-            if (i == 0 || i % 3 != 0)
-            {
-                s += $"{indice},";
-            }
-            else
-            {
-                s = s + $"\n{indice},";
-            }
-            */
         }
-        // debug
-        /*
-        Debug.Log($"origin=\n{s}");
-        s = "";
-        for (int i = 0; i < myTriangles.Count; i++)
-        {
-            var indice = myTriangles[i];
-            if (i == 0 || i % 3 != 0)
-            {
-                s += $"{indice},";
-            }
-            else
-            {
-                s = s + $"-->{(i - 1) / 3}\n{indice},";
-            }
-        }
-        Debug.Log($"now=\n{s}" + "-->" + (myTriangles.Count) / 3);
-        */
 
         Mesh myMesh = new Mesh();
         Color[] myColors = new Color[myVertices.Count];

@@ -1,4 +1,4 @@
-Shader "Unlit/Week002_Trial_v3"
+Shader "Unlit/Week002_Trail_v2"
 {
     Properties
     {

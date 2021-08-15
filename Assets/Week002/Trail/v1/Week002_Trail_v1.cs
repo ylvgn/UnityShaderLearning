@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Week002_Trial_v1 : MonoBehaviour
+public class Week002_Trail_v1 : MonoBehaviour
 {
     public struct Point
     {
