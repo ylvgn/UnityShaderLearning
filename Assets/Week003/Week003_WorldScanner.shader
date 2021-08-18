@@ -46,7 +46,7 @@ Shader "Unlit/Week003_WorldScanner"
             Varyings vert(Attributes i)
             {
                 Varyings o;
-                //o.positionHCS = i.positionOS; // Òòžé‚€ mesh vertex ‚S -1 to 1, Í¬ clip space Ò»˜Ó ??
+                //o.positionHCS = i.positionOS; // why mesh vertex -1 to 1 ? but this line not work.
                 o.positionHCS = TransformObjectToHClip(i.positionOS.xyz);
                 return o;
             }
