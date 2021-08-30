@@ -1,3 +1,4 @@
+// https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.5/manual/writing-shaders-urp-reconstruct-world-position.html
 Shader "Unlit/Week003_DepthTextureSample"
 {
     Properties

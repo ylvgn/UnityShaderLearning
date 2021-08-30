@@ -1,4 +1,4 @@
-Shader "Unlit/Week003_WorldScanner"
+Shader "Unlit/Week003_WorldScanner_v1"
 {
     Properties
     {
@@ -11,7 +11,10 @@ Shader "Unlit/Week003_WorldScanner"
     }
     SubShader
     {
-        Tags {"RenderType" = "Transparent" "Queue" = "Transparent"}
+        Tags {
+            "RenderType" = "Transparent"
+            "Queue" = "Transparent"
+        }
         LOD 100
 
         Pass
@@ -46,7 +49,6 @@ Shader "Unlit/Week003_WorldScanner"
             Varyings vert(Attributes i)
             {
                 Varyings o;
-                //o.positionHCS = i.positionOS; // why mesh vertex -1 to 1 ? but this line not work.
                 o.positionHCS = TransformObjectToHClip(i.positionOS.xyz);
                 return o;
             }
@@ -57,7 +59,6 @@ Shader "Unlit/Week003_WorldScanner"
                 float2 UV = i.positionHCS.xy / _ScaledScreenParams.xy;
                 o.xyz = SampleSceneColor(UV);
                 o.a = 1;
-
                 #if UNITY_REVERSED_Z
                     // D3D
                     real depth = SampleSceneDepth(UV);

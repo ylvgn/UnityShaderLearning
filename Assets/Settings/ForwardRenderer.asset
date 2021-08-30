@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4168044725529643215
+--- !u!114 &-546770849193288402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d6c8b12a88dfc428cad54e1d6330a2, type: 3}
-  m_Name: NewMyBlitFeature
+  m_Script: {fileID: 11500000, guid: 55f2278daad699d4a81e0f75c1b7e998, type: 3}
+  m_Name: NewMyPostProcessRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  settings:
-    IsEnabled: 1
-    WhenToInsert: 1000
-    MaterialToBlit: {fileID: 2100000, guid: ba960f9f92292e740b74247aa01eecf8, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30,8 +26,8 @@ MonoBehaviour:
   m_Name: ForwardRenderer
   m_EditorClassIdentifier: 
   m_RendererFeatures:
-  - {fileID: -4168044725529643215}
-  m_RendererFeatureMap: 3177ddc6672128c6
+  - {fileID: -546770849193288402}
+  m_RendererFeatureMap: 2e9d4b40cf7a69f8
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:

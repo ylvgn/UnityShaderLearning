@@ -8,9 +8,9 @@ public class Week003_WorldScanner : MonoBehaviour
     public Material mat;
     Vector3 lastPos;
 
-    void Start()
+    private void Start()
     {
-        Camera.main.depthTextureMode |= DepthTextureMode.Depth;
+        Application.targetFrameRate = 30;
     }
 
     void Update()

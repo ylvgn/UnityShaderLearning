@@ -14,6 +14,4 @@
 #define MY_SAMPLE_TEXTURE2D(T, uv) \
 	SAMPLE_TEXTURE2D(T, sampler##T, uv * T##_ST.xy + T##_ST.zw);
 
-
-
 #endif // __MY_COMMON_HLSL__
