@@ -39,7 +39,7 @@ Shader "Unlit/Week003_UnLitTextureSample"
             MY_TEXTURE2D(_MainTex);
             /*
             TEXTURE2D(_MainTex);
-            SAMPLER(_MainTex);
+            SAMPLER(sampler_MainTex);
             */
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseColor;

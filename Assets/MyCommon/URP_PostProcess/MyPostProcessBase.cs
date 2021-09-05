@@ -34,7 +34,7 @@ public class MyPostProcessBase : MonoBehaviour
     {
     }
 
-    static public Mesh GetFullScreenTriangleMesh(string name)
+    static public Mesh GetFullScreenTriangleMesh(string name = "Week004" )
     {
         if (!fullScreenTriangle)
         {

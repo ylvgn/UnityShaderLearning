@@ -86,10 +86,10 @@ Shader "Unlit/Week003_Shield_v2"
 
                 float3 positionVS0 = ComputeViewSpacePosition(screenUV, depth, UNITY_MATRIX_I_P);
                 float3 positionVS1 = ComputeViewSpacePosition(screenUV, i.positionHCS.z, UNITY_MATRIX_I_P);
-                float intersect = (1 - (positionVS0.z - positionVS1.z)) * _EdgePower;
+                float intersect = saturate(1 - (positionVS0.z - positionVS1.z)) * _EdgePower;
 
                 float intensity = max(fresnel, intersect);
-                intensity = saturate(pow(intensity, _Power));
+                intensity = saturate(pow(intensity, abs(_Power)));
 
                 float4 maskTex = MY_SAMPLE_TEXTURE2D(_MainTex, i.uv);
                 return lerp(_EdgeColor, _Color * intensity, 1 - maskTex.r);
